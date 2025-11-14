@@ -6,6 +6,7 @@ import Login from '../pages/auth/Login';
 import Forgotpassword from '../pages/auth/Forgotpassword';
 import ResetPassword from '../pages/auth/ResetPassword';
 import VerifyEmail from '../pages/auth/VerifyEmail';
+import ProfileSetup from '../pages/auth/ProfileSetup';
 
 const routes = [
    {
@@ -25,8 +26,12 @@ const routes = [
       element: <ResetPassword />
    },
    {
-      path: "verify-email",
+      path: "verify-email/:token",
       element: <VerifyEmail />
+   },
+   {
+      path: "/profile-setup",
+      element: <ProfileSetup />
    },
    {
       path: "/",

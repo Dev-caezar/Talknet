@@ -3,8 +3,10 @@ import React, { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X } from "lucide-react"
 import logo from "../../assets/public/talknet.png"
+import { useNavigate } from "react-router-dom"
 
 const Header = () => {
+   const navigate = useNavigate()
    const navs = ["Home", "About", "Contact", "Blog"]
    const [isScrolled, setIsScrolled] = useState(false)
    const [menuOpen, setMenuOpen] = useState(false)
@@ -57,6 +59,7 @@ const Header = () => {
                   whileHover={{ scale: 1.08 }}
                   whileTap={{ scale: 0.95 }}
                   transition={{ type: "spring", stiffness: 300 }}
+                  onClick={() => navigate("/login")}
                   className={`w-24 sm:w-28 h-10 sm:h-12 text-sm sm:text-base font-semibold rounded-lg shadow-md transition-all duration-300 ${isScrolled
                      ? "bg-purple-600 text-white"
                      : "bg-white text-purple-600"
@@ -69,6 +72,7 @@ const Header = () => {
                   whileHover={{ scale: 1.08 }}
                   whileTap={{ scale: 0.95 }}
                   transition={{ type: "spring", stiffness: 300 }}
+                  onClick={() => navigate("/register")}
                   className={`w-24 sm:w-28 h-10 sm:h-12 text-sm sm:text-base font-semibold rounded-lg shadow-md transition-all duration-300 ${isScrolled
                      ? "bg-white text-purple-600"
                      : "bg-purple-600 text-white"
@@ -133,6 +137,7 @@ const Header = () => {
                            whileHover={{ scale: 1.05 }}
                            whileTap={{ scale: 0.95 }}
                            transition={{ type: "spring", stiffness: 300 }}
+                           onClick={() => navigate("/login")}
                            className="w-full h-10 py-3 bg-purple-600 text-white rounded-lg shadow-md font-semibold"
                         >
                            Login
@@ -141,6 +146,7 @@ const Header = () => {
                            whileHover={{ scale: 1.05 }}
                            whileTap={{ scale: 0.95 }}
                            transition={{ type: "spring", stiffness: 300 }}
+                           onClick={() => navigate("/register")}
                            className="w-full h-10 py-3 bg-white text-purple-600 border border-purple-600 rounded-lg shadow-md font-semibold"
                         >
                            Sign Up

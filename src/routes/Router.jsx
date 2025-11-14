@@ -26,7 +26,7 @@ const routes = [
       element: <ResetPassword />
    },
    {
-      path: "verify-email/:token",
+      path: "verify/:token",
       element: <VerifyEmail />
    },
    {

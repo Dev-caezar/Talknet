@@ -46,7 +46,7 @@ const ProfileSetup = () => {
          await validationSchema.validate({ username: formData.username }, { abortEarly: false });
          const formDataToSend = new FormData();
          formDataToSend.append("username", formData.username);
-         formDataToSend.append("profilePicture", formData.profilePicture);
+         formDataToSend.append("profile", formData.profilePicture);
          formDataToSend.append("email", email);
          const response = await api.post('/profile', formDataToSend, {
             headers: {

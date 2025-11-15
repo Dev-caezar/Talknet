@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { MailCheck, Link as LinkIcon, CheckCircle, XCircle, Loader } from 'lucide-react';
 import api from '../../api/api';
-import { useParams, Link, useNavigate } from 'react-router-dom'; // 💡 Imported Link and useNavigate
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import { userStore } from '../../config/Store';
 
 const VerifyEmail = () => {
    const navigate = useNavigate();
-   // 💡 State to track the result of the verification
-   const [isVerified, setisVerified] = useState(null); // Use null initially, true/false after attempt
-   // 💡 State to track loading status
+   const { setAccessToken } = userStore();
+   const [isVerified, setisVerified] = useState(null);
    const [loading, setLoading] = useState(true);
-   // 💡 State for error message (e.g., token expired/invalid)
    const [error, setError] = useState(null);
 
    const { token } = useParams();
@@ -19,18 +18,16 @@ const VerifyEmail = () => {
       setError(null);
 
       try {
-         // ❗ Correct API call with await to handle the promise
          const response = await api.get(`/verify/${token}`);
          console.log("Verification Response:", response.data);
-
-         // Assuming the backend sends a successful response (200/201)
-         // and maybe a status property indicating success
+         setAccessToken(response.data.accessToken);
          setisVerified(true);
+         setTimeout(() => {
+            navigate("/profile-setup")
+         }, 5000)
 
       } catch (err) {
          console.error("Verification Error:", err);
-
-         // Set verification to false and capture a user-friendly error message
          setisVerified(false);
          setError(err.response?.data?.message || "The verification link is invalid or has expired. Please try registering again.");
 
@@ -40,23 +37,19 @@ const VerifyEmail = () => {
    };
 
    useEffect(() => {
-      // Only run if a token exists
       if (token) {
          getApiResponse();
       } else {
-         // Handle case where token is missing in URL (optional)
          setLoading(false);
          setisVerified(false);
          setError("Verification token is missing in the URL.");
       }
-   }, [token]); // Dependency array includes token
+   }, [token]);
 
    const renderContent = () => {
       if (loading) {
          return (
-            // 🔄 Loading State
             <>
-               {/* Used Loader component for better spin look */}
                <Loader className="w-16 h-16 text-purple-500 mx-auto mb-6 animate-spin" />
                <h2 className="text-3xl font-bold mb-3 text-gray-800">
                   Verifying Email...
@@ -70,7 +63,6 @@ const VerifyEmail = () => {
 
       if (isVerified === true) {
          return (
-            // ✅ Success State
             <>
                <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-6 animate-bounce" />
 
@@ -81,19 +73,9 @@ const VerifyEmail = () => {
                <p className="text-md text-gray-600 mb-8">
                   Your email address has been successfully verified. You can now log in to your account.
                </p>
-
-               <Link
-                  to="/login"
-                  // 💡 Using Link from react-router-dom, not the LinkIcon
-                  className="w-full inline-block py-3 px-4 rounded-lg shadow-xl text-lg font-bold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 transition duration-300 ease-in-out transform hover:scale-[1.01]"
-               >
-                  Proceed to Login
-               </Link>
             </>
          );
       }
-
-      // ❌ Error/Failure State
       return (
          <>
             <XCircle className="w-16 h-16 text-red-500 mx-auto mb-6" />
@@ -117,13 +99,13 @@ const VerifyEmail = () => {
    };
 
    return (
-      <div className="w-full h-dvh bg-gradient-to-br from-purple-500 to-indigo-700 flex flex-col">
+      <div className="w-full h-dvh bg-linear-to-br from-purple-500 to-indigo-700 flex flex-col">
 
          <header className='p-6 absolute top-0 left-0 z-10'>
             <div className='flex items-center space-x-2 text-white'>
                <MailCheck className="w-6 h-6" />
                <h1 className='text-xl font-bold tracking-wider'>
-                  AppBrand
+                  Talknet
                </h1>
             </div>
          </header>

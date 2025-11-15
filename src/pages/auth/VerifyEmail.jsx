@@ -6,7 +6,7 @@ import { userStore } from '../../config/Store';
 
 const VerifyEmail = () => {
    const navigate = useNavigate();
-   const { setUserid, setAccessToken } = userStore();
+   const { setUserId, setAccessToken } = userStore();
    const [isVerified, setisVerified] = useState(null);
    const [loading, setLoading] = useState(true);
    const [error, setError] = useState(null);
@@ -21,7 +21,7 @@ const VerifyEmail = () => {
          const response = await api.get(`/verify/${token}`);
          console.log("Verification Response:", response.data);
          setisVerified(true);
-         setUserid(response.data.id);
+         setUserId(response.data.id);
          setAccessToken(response.data.accessToken);
          setTimeout(() => {
             navigate("/profile-setup")

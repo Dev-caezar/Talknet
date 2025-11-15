@@ -4,10 +4,10 @@ import { persist } from "zustand/middleware";
 export const userStore = create(
    persist(
       (set) => ({
-         userData: "",
+         userId: null,
          accessToken: null,
 
-         setUserData: (data) => set({ userData: data }),
+         setUserId: (id) => set({ userId: id }),
          setAccessToken: (token) => set({ accessToken: token }),
       }),
       {

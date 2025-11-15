@@ -3,6 +3,7 @@ import { Eye, EyeOff, User } from 'lucide-react';
 // Assuming 'react-router-dom' is available
 import { useNavigate } from 'react-router-dom';
 import * as Yup from "yup"; // Import Yup
+import api from '../../api/api';
 
 // Custom component to display errors concisely
 const ErrorDisplay = ({ message }) => {
@@ -70,6 +71,8 @@ const Login = () => {
 
       try {
          await validationSchema.validate(formData, { abortEarly: false });
+         const response = await api.post('/login', formData)
+         console.log(response.data)
 
          console.log("Form Data Validated. Attempting backend login with:", formData);
 
@@ -85,7 +88,6 @@ const Login = () => {
             console.log("Backend would try to log in via Username...");
          }
 
-         // navigate("/dashboard"); 
 
       } catch (error) {
          if (error instanceof Yup.ValidationError) {
@@ -112,7 +114,7 @@ const Login = () => {
             <div className='flex items-center space-x-2 text-white'>
                <User className="w-6 h-6" />
                <h1 className='text-xl font-bold tracking-wider'>
-                  AppBrand
+                  Talknet
                </h1>
             </div>
          </header>

@@ -122,19 +122,12 @@ const Register = () => {
       setErrors({});
 
       try {
-         // 1. Validation check
          await validationSchema.validate(formData, { abortEarly: false });
-
-         // 2. Start Loading
          setLoading(true);
-
-         // 3. API Call
          const response = await api.post('/register', formData);
          console.log(response);
-
-         // 4. On success, show modal
          setShowSuccessModal(true);
-
+         localStorage.setItem('email', formData.email);
       } catch (error) {
          if (error instanceof Yup.ValidationError) {
             const newErrors = {};
@@ -147,11 +140,9 @@ const Register = () => {
             console.error("Validation Errors:", newErrors);
          } else {
             console.error("Registration Error:", error);
-            // Display generic server error
             setErrors({ general: error.response?.data?.message || "Registration failed. Please try again." });
          }
       } finally {
-         // 5. Stop Loading regardless of success/failure
          setLoading(false);
       }
    };

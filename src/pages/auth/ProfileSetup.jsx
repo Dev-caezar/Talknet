@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { Camera, User, UserPlus } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from "yup";
+import api from '../../api/api';
 
 const ProfileSetup = () => {
    const navigate = useNavigate();
+   const email = localStorage.getItem('email');
 
    const [formData, setFormData] = useState({
       username: '',
@@ -20,14 +22,13 @@ const ProfileSetup = () => {
          const file = files[0];
          setFormData(prev => ({ ...prev, [name]: file }));
          setPreviewUrl(URL.createObjectURL(file));
-         setErrors(prev => ({ ...prev, [name]: undefined })); // Clear error on file change
+         setErrors(prev => ({ ...prev, [name]: undefined }));
       } else {
          setFormData(prev => ({ ...prev, [name]: value }));
-         setErrors(prev => ({ ...prev, [name]: undefined })); // Clear error on value change
+         setErrors(prev => ({ ...prev, [name]: undefined }));
       }
    };
 
-   // Validation Schema for Username
    const validationSchema = Yup.object({
       username: Yup.string()
          .required("Username is required")
@@ -37,25 +38,24 @@ const ProfileSetup = () => {
             /^[a-zA-Z0-9_]+$/,
             "Username can only contain letters, numbers, and underscores"
          ),
-      // Note: Profile picture validation (size/type) is usually complex and handled by backend/frontend logic,
-      // but for basic validation here, we will omit it, as the requirement was primarily for username.
    });
 
    const handleSubmit = async (e) => {
       e.preventDefault();
       try {
-         // Validate only the fields present in the schema (username)
          await validationSchema.validate({ username: formData.username }, { abortEarly: false });
-
+         const formDataToSend = new FormData();
+         formDataToSend.append("username", formData.username);
+         formDataToSend.append("profilePicture", formData.profilePicture);
+         formDataToSend.append("email", email);
+         const response = await api.post('/profile', formDataToSend, {
+            headers: {
+               'Content-Type': 'multipart/form-data',
+            },
+         })
+         console.log(response.data)
          setErrors({});
-
-         // 1. Data is ready for backend submission
-         console.log("Profile Data Ready for Submission:");
-         console.log("Username:", formData.username);
-         console.log("Profile Picture File:", formData.profilePicture);
-
-         // Placeholder for navigation after successful save
-         // navigate("/home"); 
+         navigate("/home");
 
       } catch (error) {
          if (error instanceof Yup.ValidationError) {

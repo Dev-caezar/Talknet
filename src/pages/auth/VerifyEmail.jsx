@@ -20,9 +20,9 @@ const VerifyEmail = () => {
       try {
          const response = await api.get(`/verify/${token}`);
          console.log("Verification Response:", response.data);
+         setisVerified(true);
          setUserid(response.data.id);
          setAccessToken(response.data.accessToken);
-         setisVerified(true);
          setTimeout(() => {
             navigate("/profile-setup")
          }, 5000)

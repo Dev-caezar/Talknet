@@ -48,7 +48,7 @@ const Features = () => {
                            style={{ backgroundColor: item.iconBgColor }}
                         >
                            <span style={{ color: item.iconColor }}>
-                              <item.icon className="size-[32px]" />
+                              <item.icon className="size-8" />
                            </span>
                         </div>
 

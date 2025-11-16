@@ -4,18 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import * as Yup from "yup";
 import api from '../../api/api';
 
-/**
- * Reusable component to display validation errors.
- */
 const ErrorDisplay = ({ message }) => {
    return message ? (
       <p className="mt-1 text-xs text-red-600 font-semibold italic">{message}</p>
    ) : null;
 };
 
-/**
- * Custom Tailwind-styled Modal for successful registration.
- */
+
 const SuccessModal = ({ isOpen, onClose, email }) => {
    if (!isOpen) return null;
 
@@ -57,7 +52,7 @@ const SuccessModal = ({ isOpen, onClose, email }) => {
 
                <button
                   onClick={onClose}
-                  className="w-full py-3 px-4 rounded-xl text-white font-bold bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 transition duration-200 shadow-xl hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-purple-300 focus:ring-opacity-50"
+                  className="w-full py-3 px-4 rounded-xl text-white font-bold bg-linear-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 transition duration-200 shadow-xl hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-purple-300 focus:ring-opacity-50"
                >
                   I understand, continue to login
                </button>
@@ -81,7 +76,6 @@ const Register = () => {
 
    const [showSuccessModal, setShowSuccessModal] = useState(false);
    const [showPassword, setShowPassword] = useState(false);
-   // 💥 New state for loading/API status
    const [loading, setLoading] = useState(false);
 
    const handleChange = (e) => {
@@ -153,8 +147,7 @@ const Register = () => {
 
    return (
       <div className="w-full h-dvh flex font-sans antialiased">
-         {/* Left Section (unchanged) */}
-         <div className="hidden md:flex w-1/2 bg-gradient-to-br from-purple-700 to-indigo-600 relative overflow-hidden items-center justify-center p-8">
+         <div className="hidden md:flex w-1/2 bg-linear-to-br from-purple-700 to-indigo-600 relative overflow-hidden items-center justify-center p-8">
             <div className="absolute top-1/4 left-1/4 w-48 h-48 bg-white/10 rounded-full mix-blend-overlay animate-float-slow opacity-80"></div>
             <div className="absolute bottom-1/3 right-1/3 w-28 h-28 bg-white/15 rounded-full mix-blend-overlay animate-float-fast opacity-90"></div>
             <div className="absolute top-1/2 -left-20 w-80 h-80 bg-white/5 rounded-full mix-blend-overlay animate-float-medium"></div>
@@ -188,7 +181,6 @@ const Register = () => {
                </h2>
                <form onSubmit={handleSubmit} className="w-full space-y-6">
 
-                  {/* Input fields disabled when loading */}
                   <div>
                      <label htmlFor="fullname" className="block text-sm font-semibold text-gray-700 mb-1">Full Name</label>
                      <input
@@ -198,7 +190,7 @@ const Register = () => {
                         value={formData.fullname}
                         onChange={handleChange}
                         placeholder="Enter your Name"
-                        disabled={loading} // 🔒 Disabled state applied
+                        disabled={loading}
                         className={`block w-full px-4 py-3.5 border ${errors.fullname ? 'border-red-500' : 'border-gray-300'} rounded-xl shadow-inner focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-purple-600 text-base placeholder-gray-400 transition duration-150 ease-in-out ${loading ? 'bg-gray-100 cursor-not-allowed' : ''}`}
                      />
                      <ErrorDisplay message={errors.fullname} />
@@ -213,7 +205,7 @@ const Register = () => {
                         value={formData.email}
                         onChange={handleChange}
                         placeholder="you@example.com"
-                        disabled={loading} // 🔒 Disabled state applied
+                        disabled={loading}
                         className={`block w-full px-4 py-3.5 border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded-xl shadow-inner focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-purple-600 text-base placeholder-gray-400 transition duration-150 ease-in-out ${loading ? 'bg-gray-100 cursor-not-allowed' : ''}`}
                      />
                      <ErrorDisplay message={errors.email} />
@@ -228,7 +220,7 @@ const Register = () => {
                         value={formData.phoneNumber}
                         onChange={handleChange}
                         placeholder="e.g., 5551234567"
-                        disabled={loading} // 🔒 Disabled state applied
+                        disabled={loading}
                         className={`block w-full px-4 py-3.5 border ${errors.phoneNumber ? 'border-red-500' : 'border-gray-300'} rounded-xl shadow-inner focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-purple-600 text-base placeholder-gray-400 transition duration-150 ease-in-out ${loading ? 'bg-gray-100 cursor-not-allowed' : ''}`}
                      />
                      <ErrorDisplay message={errors.phoneNumber} />
@@ -244,7 +236,7 @@ const Register = () => {
                            value={formData.password}
                            onChange={handleChange}
                            placeholder="Enter a strong password (min 8 characters)"
-                           disabled={loading} // 🔒 Disabled state applied
+                           disabled={loading}
                            className={`block w-full px-4 py-3.5 border ${errors.password ? 'border-red-500' : 'border-gray-300'} rounded-xl shadow-inner focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-purple-600 text-base pr-12 placeholder-gray-400 transition duration-150 ease-in-out ${loading ? 'bg-gray-100 cursor-not-allowed' : ''}`}
                         />
                         <span
@@ -267,7 +259,7 @@ const Register = () => {
                            value={formData.confirmPassword}
                            onChange={handleChange}
                            placeholder="Re-enter your password"
-                           disabled={loading} // 🔒 Disabled state applied
+                           disabled={loading}
                            className={`block w-full px-4 py-3.5 border ${errors.confirmPassword ? 'border-red-500' : 'border-gray-300'} rounded-xl shadow-inner focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-purple-600 text-base pr-12 placeholder-gray-400 transition duration-150 ease-in-out ${loading ? 'bg-gray-100 cursor-not-allowed' : ''}`}
                         />
                         <span
@@ -280,26 +272,23 @@ const Register = () => {
                      <ErrorDisplay message={errors.confirmPassword} />
                   </div>
 
-                  {/* General Server Error Display */}
                   {errors.general && (
                      <div className="bg-red-50 border border-red-200 text-red-700 p-3 rounded-lg text-sm font-medium">
                         {errors.general}
                      </div>
                   )}
 
-                  {/* Submit Button with Loading State */}
                   <button
                      type="submit"
                      disabled={loading} // 🔒 Disabled state applied
                      className={`w-full mt-8 flex justify-center items-center py-4 px-4 rounded-xl shadow-xl text-xl font-extrabold text-white transition duration-200 ease-in-out focus:outline-none focus:ring-4 focus:ring-purple-300 focus:ring-opacity-50 
                             ${loading
                            ? 'bg-gray-400 cursor-not-allowed'
-                           : 'bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 transform hover:scale-[1.01]'
+                           : 'bg-linear-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 transform hover:scale-[1.01]'
                         }`}
                   >
                      {loading ? (
                         <>
-                           {/* Spinner SVG - requires custom animation in tailwind.config.js */}
                            <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>

@@ -30,7 +30,6 @@ export default function ChatFeatureSection() {
                   </motion.div>
                </motion.div>
 
-               {/* Right Column: Text Content */}
                <motion.div
                   initial={{ opacity: 0, x: 80 }}
                   whileInView={{ opacity: 1, x: 0 }}

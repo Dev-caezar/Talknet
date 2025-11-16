@@ -70,7 +70,7 @@ const ProfileSetup = () => {
    };
 
    return (
-      <div className="w-full h-[100dvh] bg-gradient-to-br from-purple-500 to-indigo-700 flex flex-col font-sans">
+      <div className="w-full h-screen bg-linear-to-br from-purple-500 to-indigo-700 flex flex-col font-sans">
 
          <header className='p-6 absolute top-0 left-0 z-10'>
             <div className='flex items-center space-x-2 text-white'>
@@ -81,7 +81,7 @@ const ProfileSetup = () => {
             </div>
          </header>
 
-         <div className="flex-grow flex items-center justify-center">
+         <div className="grow flex items-center justify-center">
 
             <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl p-6 sm:p-8 mx-4">
 

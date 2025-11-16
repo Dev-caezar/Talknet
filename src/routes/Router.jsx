@@ -1,5 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { HomeLayout } from "../components";
+import { DashboardLayout, HomeLayout } from "../components";
 import Home from "../pages/Home";
 import Register from '../pages/auth/Register';
 import Login from '../pages/auth/Login';
@@ -7,6 +7,7 @@ import Forgotpassword from '../pages/auth/Forgotpassword';
 import ResetPassword from '../pages/auth/ResetPassword';
 import VerifyEmail from '../pages/auth/VerifyEmail';
 import ProfileSetup from '../pages/auth/ProfileSetup';
+import MessagePanel from '../pages/MessagePanel';
 
 const routes = [
    {
@@ -40,6 +41,16 @@ const routes = [
          {
             index: true,
             element: <Home />
+         },
+      ]
+   },
+   {
+      path: "/dashboard",
+      element: <DashboardLayout />,
+      children: [
+         {
+            index: true,
+            element: <MessagePanel />
          },
       ]
    }
